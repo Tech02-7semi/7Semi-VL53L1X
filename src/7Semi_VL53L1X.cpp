@@ -376,6 +376,11 @@ Status VL53L1X_7Semi::readOnce()
 uint16_t VL53L1X_7Semi::readDistance()
 {
   (void)readBlocking();
+  if (distance_mm < 60)
+    distance_mm = 0;
+  else
+    distance_mm -= 60; // calibration offset
+
   return distance_mm;
 }
 
@@ -587,3 +592,4 @@ bool VL53L1X_7Semi::applyDefaultConfiguration()
 
   return true;
 }
+
